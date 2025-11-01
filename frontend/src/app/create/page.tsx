@@ -36,7 +36,7 @@ export default function CreatePage() {
     setIsSending(true);
     setStatusMessage("Uploading sketch to /api/generate …");
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
