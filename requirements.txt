@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-multipart
+fal-client
+boto3
+requests
+qrcode[pil]
+python-dotenv
