@@ -3,7 +3,10 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 
-import { DrawingCanvas, type DrawingCanvasHandle } from "@/components/drawing/drawing-canvas";
+import {
+  DrawingCanvas,
+  type DrawingCanvasHandle,
+} from "@/components/drawing/drawing-canvas";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +36,7 @@ export default function CreatePage() {
     setIsSending(true);
     setStatusMessage("Uploading sketch to /api/generate-3d …");
     try {
-      const response = await fetch("/api/generate-3d", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,11 +53,13 @@ export default function CreatePage() {
       setStatusMessage(
         typeof payload?.message === "string"
           ? payload.message
-          : "Sketch sent successfully. Check job status in the console."
+          : "Sketch sent successfully. Check job status in the console.",
       );
     } catch (error) {
       setStatusMessage(
-        error instanceof Error ? `Upload failed: ${error.message}` : "Upload failed. Try again."
+        error instanceof Error
+          ? `Upload failed: ${error.message}`
+          : "Upload failed. Try again.",
       );
     } finally {
       setIsSending(false);
@@ -66,9 +71,12 @@ export default function CreatePage() {
       <header className="border-b border-border/60 bg-background/90 px-6 py-4 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">Create 3D Concept</h1>
+            <h1 className="text-lg font-semibold tracking-tight">
+              Create 3D Concept
+            </h1>
             <p className="text-sm text-muted-foreground">
-              Sketch a silhouette, capture it, and send it to the generator pipeline.
+              Sketch a silhouette, capture it, and send it to the generator
+              pipeline.
             </p>
           </div>
           <Button asChild variant="ghost" className="h-9 px-4">
@@ -80,16 +88,23 @@ export default function CreatePage() {
         <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-6 py-8 lg:flex-row">
           <section className="flex w-full flex-1 flex-col gap-4 lg:max-w-[58%]">
             <div className="rounded-2xl border border-border/60 bg-background/80 p-6 shadow-lg backdrop-blur">
-              <h2 className="text-base font-semibold leading-tight">Sketch workspace</h2>
+              <h2 className="text-base font-semibold leading-tight">
+                Sketch workspace
+              </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Use any brush and background combination. Capture sends the current canvas into
-                the preview, while Send uploads the same image to the generation API.
+                Use any brush and background combination. Capture sends the
+                current canvas into the preview, while Send uploads the same
+                image to the generation API.
               </p>
               <div className="mt-6 h-[520px]">
                 <DrawingCanvas ref={canvasRef} className="h-full" />
               </div>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <Button type="button" onClick={handleCapture} className="h-11 flex-1">
+                <Button
+                  type="button"
+                  onClick={handleCapture}
+                  className="h-11 flex-1"
+                >
                   Make Screenshot
                 </Button>
                 <Button
@@ -103,7 +118,9 @@ export default function CreatePage() {
                 </Button>
               </div>
               {statusMessage ? (
-                <p className="mt-2 text-sm text-muted-foreground">{statusMessage}</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {statusMessage}
+                </p>
               ) : null}
             </div>
           </section>
@@ -114,8 +131,8 @@ export default function CreatePage() {
                   Screenshot preview & status
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  The latest captured frame appears below. This is exactly what will be submitted to
-                  the generator endpoint.
+                  The latest captured frame appears below. This is exactly what
+                  will be submitted to the generator endpoint.
                 </p>
               </div>
               <div className="relative flex flex-1 items-center justify-center rounded-xl border border-border/60 bg-secondary/40 p-4">
@@ -128,9 +145,12 @@ export default function CreatePage() {
                   />
                 ) : (
                   <div className="flex flex-col items-center text-center text-sm text-muted-foreground">
-                    <span className="text-lg font-medium">No screenshot yet</span>
+                    <span className="text-lg font-medium">
+                      No screenshot yet
+                    </span>
                     <span className="mt-1">
-                      Tap &ldquo;Make Screenshot&rdquo; once you are happy with the sketch.
+                      Tap &ldquo;Make Screenshot&rdquo; once you are happy with
+                      the sketch.
                     </span>
                   </div>
                 )}
@@ -139,15 +159,19 @@ export default function CreatePage() {
                 <p className="font-semibold text-foreground">Workflow tips</p>
                 <ul className="mt-2 space-y-2">
                   <li>
-                    Keep silhouettes bold and high-contrast; the generator performs best with clean
-                    edges.
+                    Keep silhouettes bold and high-contrast; the generator
+                    performs best with clean edges.
                   </li>
                   <li>
-                    Use the color picker to test lighting variations. Background color is preserved
-                    in the upload.
+                    Use the color picker to test lighting variations. Background
+                    color is preserved in the upload.
                   </li>
                   <li>
-                    Looking for the API contract? Inspect <code className="rounded bg-secondary/60 px-1 py-0.5 text-xs text-secondary-foreground">src/app/api/generate-3d/route.ts</code>.
+                    Looking for the API contract? Inspect{" "}
+                    <code className="rounded bg-secondary/60 px-1 py-0.5 text-xs text-secondary-foreground">
+                      src/app/api/generate-3d/route.ts
+                    </code>
+                    .
                   </li>
                 </ul>
               </div>
