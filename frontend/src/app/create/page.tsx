@@ -34,7 +34,7 @@ export default function CreatePage() {
     }
 
     setIsSending(true);
-    setStatusMessage("Uploading sketch to /api/generate-3d …");
+    setStatusMessage("Uploading sketch to /api/generate …");
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -114,7 +114,7 @@ export default function CreatePage() {
                   disabled={isSending}
                   className={cn("h-11 flex-1", isSending && "animate-pulse")}
                 >
-                  {isSending ? "Sending…" : "Send to /api/generate-3d"}
+                  {isSending ? "Sending…" : "Send to /api/generate"}
                 </Button>
               </div>
               {statusMessage ? (
@@ -169,7 +169,7 @@ export default function CreatePage() {
                   <li>
                     Looking for the API contract? Inspect{" "}
                     <code className="rounded bg-secondary/60 px-1 py-0.5 text-xs text-secondary-foreground">
-                      src/app/api/generate-3d/route.ts
+                      src/app/api/generate/route.ts
                     </code>
                     .
                   </li>
