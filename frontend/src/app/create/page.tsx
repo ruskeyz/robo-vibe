@@ -15,6 +15,8 @@ export default function CreatePage() {
   const [preview, setPreview] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [qrCode, setQrCode] = useState<string | null>(null);
+  const [publicUrl, setPublicUrl] = useState<string | null>(null);
 
   const handleCapture = () => {
     const dataUrl = canvasRef.current?.toDataURL();
@@ -33,10 +35,12 @@ export default function CreatePage() {
       return;
     }
 
+    setQrCode(null);
+    setPublicUrl(null);
     setIsSending(true);
     setStatusMessage("Uploading sketch to /api/generate …");
     try {
-      const response = await fetch("http://localhost:8000/generate", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,10 +54,16 @@ export default function CreatePage() {
       }
 
       const payload = await response.json();
+      if (typeof payload?.qrCodeBase64 === "string") {
+        setQrCode(payload.qrCodeBase64);
+      }
+      if (typeof payload?.publicUrl === "string") {
+        setPublicUrl(payload.publicUrl);
+      }
       setStatusMessage(
         typeof payload?.message === "string"
           ? payload.message
-          : "Sketch sent successfully. Check job status in the console.",
+          : "Sketch sent successfully. QR code is ready below.",
       );
     } catch (error) {
       setStatusMessage(
@@ -174,6 +184,42 @@ export default function CreatePage() {
                     .
                   </li>
                 </ul>
+              </div>
+              <div className="rounded-2xl border border-border/60 bg-background/80 p-4">
+                <h3 className="text-sm font-semibold text-foreground">
+                  Generated QR code
+                </h3>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Once the upload finishes, scan the QR to open the hosted model
+                  directly.
+                </p>
+                <div className="mt-4 flex min-h-[220px] items-center justify-center rounded-xl border border-dashed border-border/60 bg-secondary/20 p-4">
+                  {qrCode ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={qrCode}
+                      alt="QR code for generated model"
+                      className="h-44 w-44 rounded-lg border border-border/60 bg-white p-2 shadow-md"
+                    />
+                  ) : (
+                    <p className="text-center text-sm text-muted-foreground">
+                      Send a sketch to view the QR code here.
+                    </p>
+                  )}
+                </div>
+                {publicUrl ? (
+                  <p className="mt-3 truncate text-xs text-muted-foreground">
+                    Public URL:{" "}
+                    <a
+                      href={publicUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-primary underline-offset-4 hover:underline"
+                    >
+                      {publicUrl}
+                    </a>
+                  </p>
+                ) : null}
               </div>
             </div>
           </section>
