@@ -36,7 +36,7 @@ export default function CreatePage() {
     setIsSending(true);
     setStatusMessage("Uploading sketch to /api/generate-3d …");
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ export default function CreatePage() {
                   <li>
                     Looking for the API contract? Inspect{" "}
                     <code className="rounded bg-secondary/60 px-1 py-0.5 text-xs text-secondary-foreground">
-                      src/app/api/generate-3d/route.ts
+                      src/app/api/generate/route.ts
                     </code>
                     .
                   </li>

@@ -5,10 +5,13 @@ export async function POST(request: Request) {
     const body = await request.json();
     const image = body?.image;
 
-    if (typeof image !== "string" || !image.startsWith("data:image/png;base64,")) {
+    if (
+      typeof image !== "string" ||
+      !image.startsWith("data:image/png;base64,")
+    ) {
       return NextResponse.json(
         { error: "Expected base64-encoded PNG data in the `image` field." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -24,7 +27,7 @@ export async function POST(request: Request) {
       receivedBytes,
     });
   } catch (error) {
-    console.error("[generate-3d] Failed to parse request:", error);
+    console.error("[generate] Failed to parse request:", error);
     return NextResponse.json({ error: "Invalid payload." }, { status: 400 });
   }
 }
