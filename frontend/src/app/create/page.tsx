@@ -34,7 +34,7 @@ export default function CreatePage() {
     }
 
     setIsSending(true);
-    setStatusMessage("Uploading sketch to /api/generate-3d …");
+    setStatusMessage("Uploading sketch to /api/generate …");
     try {
       const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
@@ -114,7 +114,7 @@ export default function CreatePage() {
                   disabled={isSending}
                   className={cn("h-11 flex-1", isSending && "animate-pulse")}
                 >
-                  {isSending ? "Sending…" : "Send to /api/generate-3d"}
+                  {isSending ? "Sending…" : "Send to /api/generate"}
                 </Button>
               </div>
               {statusMessage ? (
