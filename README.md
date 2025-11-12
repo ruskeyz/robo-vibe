@@ -1,12 +1,14 @@
 # Robo Vibe
 
-Sketch-to-3D prototyping environment that pairs a FastAPI backend with a
-Next.js 16 frontend. Users sketch silhouettes in the browser, forward them to
-fal.ai's `triposr` model, and receive a hosted `.glb` file plus a QR code that
-opens the asset straight from S3.
+Robo Vibe is the rapid sketch-to-3D prototyping tool that earned 3rd place at
+London VibeHack (Eurasian Startup Hub). Built with FastAPI, Python, and a
+Next.js 16 frontend, it turns in-browser 2D robot silhouettes into AR-ready 3D
+models and shares them instantly via QR codes backed by S3 hosting.
 
 ## Highlights
 
+- Hackathon-proven: shipped the full sketch-to-AR workflow in 24 hours to win
+  3rd place at London VibeHack (Eurasian Startup Hub).
 - End-to-end workflow: draw, capture, upload, and retrieve a 3D model.
 - Backend safeguards for missing environment configuration and S3 errors.
 - Frontend playground with a configurable sketch canvas and QR preview.
@@ -19,11 +21,11 @@ opens the asset straight from S3.
   @react-three/fiber, @react-three/drei.
 - **Infrastructure:** AWS S3 for storing generated `.glb` files.
 
-## Project Layout
+## Project Layout🤫
 
 - `main.py` – FastAPI application exposing `/api/generate` and `/api/demo`.
 - `requirements.txt` – Python dependencies for the backend service.
-- `frontend/` – Next.js project.
+- `frontend/` – Next.js project.🤫
   - `src/app/page.tsx` – Landing page with Three.js hero scene.
   - `src/app/create/page.tsx` – Sketch-to-3D workflow UI.
   - `src/app/api/*` – Frontend proxy routes.
